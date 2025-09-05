@@ -19,6 +19,7 @@ This project demonstrates authentication, role-based access control (Admin/Docto
 
 ## 📂 Project Structure
 
+```bash
 ├── models/
 │ ├── userModel.js
 │ ├── patientModel.js
@@ -42,6 +43,8 @@ This project demonstrates authentication, role-based access control (Admin/Docto
 ├── .gitignore
 ├── package.json
 └── index.js
+
+```
 
 ---
 
