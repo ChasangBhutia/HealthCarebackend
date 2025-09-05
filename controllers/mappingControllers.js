@@ -61,8 +61,14 @@ module.exports.getMappings = async (req, res) => {
   try {
     const mappings = await mappingModel
       .find()
-      .populate("patient")
-      .populate("doctor");
+      .populate({
+        path: "patient",
+        populate: { path: "user" },
+      })
+      .populate({
+        path: "doctor",
+        populate: { path: "user" },
+      });
 
     return res
       .status(200)

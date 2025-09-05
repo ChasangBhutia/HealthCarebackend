@@ -13,13 +13,13 @@ const {
 router.post("/", isLoggedIn, isAdmin, addPatient);
 
 //GET /api/patients/ - Retrieve all patients created by the authenticated user.
-router.get("/", isLoggedIn, isAdmin, getAllPatients);
+router.get("/", isLoggedIn, getAllPatients);
 
 // GET /api/patients/<id>/ - Get details of a specific patient.
 router.get("/:patientId", isLoggedIn, getPatient);
 
 //PUT /api/patients/<id>/ - Update patient details.
-router.put("/:patientId", isLoggedIn, isAdmin, updatePatient);
+router.put("/:patientId", isLoggedIn, updatePatient);
 
 // DELETE /api/patients/<id>/ - Delete a patient record
 router.delete("/:patientId", isLoggedIn, isAdmin, deletePatient);

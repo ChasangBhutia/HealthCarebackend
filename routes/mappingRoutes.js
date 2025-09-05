@@ -9,7 +9,7 @@ const {
 const router = express.Router();
 
 // POST /api/mappings/ - Assign a doctor to a patient.
-router.post("/", isLoggedIn, isAdmin, assignDoctorToPatient);
+router.post("/", isLoggedIn, assignDoctorToPatient);
 
 // GET /api/mappings/ - Retrieve all patient-doctor mappings.
 router.get("/", isLoggedIn, getMappings);
