@@ -34,8 +34,14 @@ module.exports.addDoctor = async (req, res) => {
       });
     }
 
+    const existingDoctor = await doctorModel.findOne({ user: user._id });
+    if (existingDoctor)
+      return res
+        .status(409)
+        .json({ success: false, error: "Doctor already exist" });
+
     const newDoctor = await doctorModel.create({
-      user: newUser._id,
+      user: user._id,
       specialty,
       experience,
       hospital,

@@ -35,6 +35,12 @@ module.exports.addPatient = async (req, res) => {
       });
     }
 
+    const existingPatient = await patientModel.findOne({ user: user._id });
+    if (existingPatient)
+      return res
+        .status(409)
+        .json({ success: false, error: "Patient already exist" });
+
     const newPatient = await patientModel.create({
       user: user._id,
       age,

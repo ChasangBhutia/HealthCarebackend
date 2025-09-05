@@ -66,3 +66,17 @@ module.exports.logout = (req, res) => {
   res.clearCookie("token");
   return res.status(200).json({ success: true, message: "Logged out." });
 };
+
+module.exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await userModel.find();
+    return res
+      .status(200)
+      .json({ success: true, message: "Users found", users });
+  } catch (err) {
+    console.error(`Error fetching users: ${err.message}`);
+    return res
+      .status(500)
+      .json({ success: false, error: "Something went wrong" });
+  }
+};
