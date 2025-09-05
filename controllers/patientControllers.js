@@ -23,26 +23,20 @@ module.exports.addPatient = async (req, res) => {
         .json({ success: false, error: "Only admins can add patients" });
     }
 
-    // 2. Create a user account for the patient
-    let existingUser = await userModel.findOne({ email });
-    if (existingUser) {
-      return res
-        .status(400)
-        .json({ success: false, error: "User already exists with this email" });
+    let user = await userModel.findOne({ email });
+    if (!user) {
+      const hash = await bcrypt.hash(password, 10);
+
+      user = await userModel.create({
+        fullname,
+        email,
+        password: hash,
+        role: "patient",
+      });
     }
 
-    const hash = await bcrypt.hash(password, 10);
-
-    const newUser = await userModel.create({
-      fullname,
-      email,
-      password: hash,
-      role: "patient",
-    });
-
-    // 3. Create patient profile
     const newPatient = await patientModel.create({
-      user: newUser._id,
+      user: user._id,
       age,
       gender,
       condition,

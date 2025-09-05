@@ -22,21 +22,17 @@ module.exports.addDoctor = async (req, res) => {
         .json({ success: false, error: "Only admins can add Doctors" });
     }
 
-    let existingUser = await userModel.findOne({ email });
-    if (existingUser) {
-      return res
-        .status(400)
-        .json({ success: false, error: "User already exists with this email" });
+    let user = await userModel.findOne({ email });
+    if (!user) {
+      const hash = await bcrypt.hash(password, 10);
+
+      user = await userModel.create({
+        fullname,
+        email,
+        password: hash,
+        role: "doctor",
+      });
     }
-
-    const hash = await bcrypt.hash(password, 10);
-
-    const newUser = await userModel.create({
-      fullname,
-      email,
-      password: hash,
-      role: "doctor",
-    });
 
     const newDoctor = await doctorModel.create({
       user: newUser._id,
